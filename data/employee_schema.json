@@ -1,0 +1,71 @@
+{
+    "employee_schema": {
+        "id": "string",
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "date_of_birth": { "type": "string", "format": "date" },
+        "hire_date": { "type": "string", "format": "date" },
+        "tenure_years": { "type": "integer", "minimum": 0 },
+        "department": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" }
+            },
+            "required": ["id", "name"]
+        },
+        "manager_id": { "type": "string" },
+        "job_title": { "type": "string" },
+        "employment_type": { "type": "string", "enum": ["Full-Time", "Part-Time", "Contract", "Intern"] },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Terminated", "On Leave"] },
+        "leaves": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "leave_id": { "type": "string" },
+                    "type": { "type": "string" },
+                    "start_date": { "type": "string", "format": "date" },
+                    "end_date": { "type": "string", "format": "date" },
+                    "total_days": { "type": "integer", "minimum": 0 },
+                    "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected", "Cancelled"] },
+                    "approver_id": { "type": "string" },
+                    "reason": { "type": "string" }
+                },
+                "required": ["leave_id", "type", "start_date", "end_date", "total_days", "status"]
+            }
+        },
+        "attendance": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "date": { "type": "string", "format": "date" },
+                    "check_in_time": { "type": "string", "format": "date-time" },
+                    "check_out_time": { "type": "string", "format": "date-time" },
+                    "status": { "type": "string", "enum": ["Present", "Absent", "On Leave", "Half-Day", "Holiday"] },
+                    "worked_hours": { "type": "number", "minimum": 0 }
+                },
+                "required": ["date", "status"]
+            }
+        },
+        "leave_balances": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "leave_type": { "type": "string" },
+                    "year": { "type": "integer" },
+                    "entitled_days": { "type": "integer", "minimum": 0 },
+                    "used_days": { "type": "integer", "minimum": 0 },
+                    "remaining_days": { "type": "integer", "minimum": 0 }
+                },
+                "required": ["leave_type", "year", "entitled_days", "used_days", "remaining_days"]
+            }
+        },
+        "required": ["first_name", "last_name", "email", "hire_date", "department", "status"]
+    }
+}
